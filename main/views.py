@@ -28,18 +28,18 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
         
-        # if password == confirm_password:
-        if User.objects.filter(username = username).exists():
-            messages.error(request, "username taken")
-        elif User.objects.filter(email = email).exists():
-            messages.error(request, 'email exists') 
-        else:
-            user = User.objects.createuser(username = username, email = email, password = password)
+        if password == confirm_password:
+            if User.objects.filter(username = username).exists():
+                messages.error(request, "username taken")
+            elif User.objects.filter(email = email).exists():
+                messages.error(request, 'email exists') 
+            else:
+                user = User.objects.createuser(username = username, email = email, password = password)
             user.save()
             messages.sucess(request, 'Account created sucessfully, please login')
             return redirect('login')     
-        # else:
-        #     messages.error(request, 'passwords doesnot match')
+        else:
+            messages.error(request, 'passwords doesnot match')
     return render(request, 'register.html')
 
 def user_logout(request):

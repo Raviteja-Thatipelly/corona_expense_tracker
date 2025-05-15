@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from . models import Transactions
 
 # Create your views here.
 def index(request):
@@ -47,3 +48,46 @@ def user_logout(request):
     messages.sucess(request, 'sucessfully logedout')
     return redirect('login')
     
+
+def transactions(request):
+    if request.method == "POST":
+        print("POST DATA:", request.POST)
+        transaction_type = request.POST.get("type")
+        source_input = request.POST.get("source")
+        paid_to_input = request.POST.get("paid_to")
+        mode_of_payment = request.POST.get("mode_of_payment")
+        amount = request.POST.get("amount")
+        currency = request.POST.get("currency")
+        description = request.POST.get("description")
+        date = request.POST.get("date")
+
+        if transaction_type == "income":
+            Transactions.objects.create(
+            type = transaction_type,
+            source = source_input,
+            paid_to = None,
+            mode_of_payment = mode_of_payment,
+            amount = amount,
+            currency = currency,
+            description = description,
+            date = date
+            )
+        else:
+            Transactions.objects.create(
+            type = transaction_type,
+            source = None,
+            paid_to = paid_to_input,
+            mode_of_payment = mode_of_payment,
+            amount = amount,
+            currency = currency,
+            description = description,
+            date = date 
+            )
+
+        return redirect('transactions')
+    
+    trans_actions_data = Transactions.objects.all().order_by('-date')
+    return render(request, 'transactions.html', {'transactions': trans_actions_data})
+
+def loans(request):
+    return render(request, 'loans.html')    

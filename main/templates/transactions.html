@@ -1,50 +1,18 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>Transactions</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Source</th>
-                    <th>Paid To</th>
-                    <th>Payment Mode</th>
-                    <th>Amount</th>
-                    <th>Currency</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transactions %}
-                <tr>
-                    <td>{{ transaction.type }}</td>
-                    <td>{{ transaction.source }}</td>
-                    <td>{{ transaction.paid_to }}</td>
-                    <td>{{ transaction.payment_mode }}</td>
-                    <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.currency }}</td>
-                    <td>{{ transaction.description }}</td>
-                    <td>{{ transaction.date }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="8">No transactions found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
 
         <!-- Form for adding a new transaction -->
-        <form method="POST" action="{% url 'transactions' %}" class="transaction-form">
+        <form method="POST" action="{% url 'transactions' %}" id="transaction_form" class="transaction-form">
             {% csrf_token %}
             <label>Type:
                 <select name="type" required>
@@ -96,9 +64,40 @@
         </form>
 
         <!-- Table of transactions -->
-        
+        <table>    
+        <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Source</th>
+                    <th>Paid To</th>
+                    <th>Payment Mode</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr class="{{transaction.type}}">
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.source }}</td>
+                    <td>{{ transaction.paid_to }}</td>
+                    <td>{{ transaction.payment_mode }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.currency }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No transactions found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <script src="{% static 'js/transactions.js' %}"></script>
 </body>
-</html>
+</html> 

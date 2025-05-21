@@ -55,7 +55,8 @@ def transactions(request):
         transaction_type = request.POST.get("type")
         source_input = request.POST.get("source")
         paid_to_input = request.POST.get("paid_to")
-        mode_of_payment = request.POST.get("mode_of_payment")
+        category_input = request.POST.get("category")
+        payment_mode = request.POST.get("mode_of_payment")
         amount = request.POST.get("amount")
         currency = request.POST.get("currency")
         description = request.POST.get("description")
@@ -66,7 +67,8 @@ def transactions(request):
             type = transaction_type,
             source = source_input,
             paid_to = None,
-            mode_of_payment = mode_of_payment,
+            category = category_input,
+            mode_of_payment = payment_mode,
             amount = amount,
             currency = currency,
             description = description,
@@ -77,7 +79,8 @@ def transactions(request):
             type = transaction_type,
             source = None,
             paid_to = paid_to_input,
-            mode_of_payment = mode_of_payment,
+            category = category_input,
+            mode_of_payment = payment_mode,
             amount = amount,
             currency = currency,
             description = description,
@@ -90,4 +93,5 @@ def transactions(request):
     return render(request, 'transactions.html', {'transactions': trans_actions_data})
 
 def loans(request):
-    return render(request, 'loans.html')    
+    return render(request, 'loans.html')  
+

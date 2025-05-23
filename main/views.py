@@ -35,9 +35,9 @@ def register(request):
             elif User.objects.filter(email = email).exists():
                 messages.error(request, 'email exists') 
             else:
-                user = User.objects.createuser(username = username, email = email, password = password)
+                user = User.objects.create_user(username = username, email = email, password = password)
             user.save()
-            messages.sucess(request, 'Account created sucessfully, please login')
+            messages.success(request, 'Account created sucessfully, please login')
             return redirect('login')     
         else:
             messages.error(request, 'passwords doesnot match')
@@ -45,7 +45,7 @@ def register(request):
 
 def user_logout(request):
     logout(request)
-    messages.sucess(request, 'sucessfully logedout')
+    messages.success(request, 'sucessfully logedout')
     return redirect('login')
     
 

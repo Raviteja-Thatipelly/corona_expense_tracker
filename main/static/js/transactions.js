@@ -1,6 +1,6 @@
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('.transaction-form');
+    const form = document.querySelector('#transaction_form');
 
     // Basic form validation before submission
     form.addEventListener('submit', function (event) {
@@ -17,14 +17,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Optional: Live update for transaction type styling
-    const typeSelect = form.querySelector('select[name="transaction_type"]');
-    typeSelect.addEventListener('change', function () {
-        form.style.borderColor = typeSelect.value === "income" ? "green" : "red";
-    });
+    // // Optional: Live update for transaction type styling
+    // const typeSelect = form.querySelector('select[name="transaction_type"]');
+    // typeSelect.addEventListener('change', function () {
+    //     form.style.borderColor = typeSelect.value === "income" ? "green" : "red";
+    // });
 
-    // Example: Add animation to table rows on load
+
+    const categoryFilter = document.getElementById("categoryFilter");
     const rows = document.querySelectorAll("tbody tr");
+    categoryFilter.addEventListener('change',() => {
+        const selectedVAlue = categoryFilter.value.toLowerCase();
+        rows.forEach(row =>{
+            const rowCat = row.getAttribute('data-category')?.toLowerCase();
+            if (!selectedVAlue||rowCat === selectedVAlue){
+                row.style.display = '';}
+            else{
+                row.style.display = 'none';
+            }
+        })
+    })
+    
+    
+    
+    // Example: Add animation to table rows on load
     rows.forEach((row, index) => {
         row.style.opacity = 0;
         setTimeout(() => {

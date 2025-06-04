@@ -1,15 +1,11 @@
-{% load static %}
+{% extends 'base.html' %}
+  {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Loan Manager</title>
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h1>Loan Manager</h1>
+  <title>{% block title %}expenses manager | Home {% endblock %}</title>
+
+  {% block content %}
+  <div>
+      <h1> Loans Manager </h1>
 
     <div class="summary">
       <div class="card" id="totalLoans">Total Loans: 0</div>
@@ -37,5 +33,4 @@
   </div>
 
   <script src="{% static 'loans.js' %}"></script>
-</body>
-</html>
+ {% endblock %} 

@@ -8433,7 +8433,7 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #ffffff;
   --bs-body-color-rgb: 255, 255, 255;
-  --bs-body-bg: #fff;
+  --bs-body-bg: #060000;
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
@@ -25138,12 +25138,12 @@ dl li {
 /*# sourceMappingURL=maps/style.css.map */
 
 /* loans page CSS */
-body {
+/* body {
   font-family: Arial, sans-serif;
   background: #f5f5f5;
   margin: 0;
   padding: 20px;
-}
+} */
 
 .container {
   max-width: 900px;
@@ -25163,20 +25163,6 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
-.card {
-  background: #e0e0e0;
-  padding: 15px;
-  border-radius: 8px;
-  flex: 1;
-  text-align: center;
-  font-weight: bold;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
 
 th, td {
   padding: 10px;
@@ -25187,16 +25173,16 @@ th, td {
   background: #f0f0f0;
   padding: 15px;
   border-radius: 8px;
-}
+} */
 /* loans page CSS */
 
 /* transactions page CSS */
-body {
+/* body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
     margin: 0;
     padding: 20px;
-}
+} */
 
 .container {
     max-width: 1000px;
@@ -25259,12 +25245,6 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    background-color: #fafafa;
-}
 
 th, td {
     padding: 12px;

@@ -20,3 +20,7 @@ class Transactions(models.Model):
     
     def __str__(self):
         return f" {self.type} - {self.amount}"    
+    
+    
+# class Loans(models.Model):
+            

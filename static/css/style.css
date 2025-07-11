@@ -13865,8 +13865,8 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
   --bs-modal-padding: 0.9375rem;
   --bs-modal-margin: 10px;
   --bs-modal-color: ;
-  --bs-modal-bg: #000000;
-  --bs-modal-border-color: #2c2e33;
+  --bs-modal-bg: #060505;
+  --bs-modal-border-color: #121317;
   --bs-modal-border-width: 1px;
   --bs-modal-border-radius: var(--bs-border-radius-lg);
   --bs-modal-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -25145,23 +25145,24 @@ dl li {
   padding: 20px;
 } */
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+.loans_manager {
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+  padding-top: 50px;
 }
 
-h1, h2 {
+.loans_details{
   color: #333;
 }
 
-.summary {
+.loan_summary {
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  margin: 20px;
+  padding-top: 50px;
 }
+
 
 
 th, td {
@@ -25184,16 +25185,7 @@ th, td {
     padding: 20px;
 } */
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-h1 {
+/* h1 {
     text-align: center;
     color: #333;
     margin-bottom: 30px;
@@ -25259,12 +25251,36 @@ th {
     top: 0;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
 
 .Type_container{
   color: #cc3399;
 
-}
+} */
 /* transactions page CSS */
+
+.table-responsive {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-dark thead th {
+  color: #ccc;
+  background-color: #1f1f2e; /* Match dark theme */
+}
+
+.table-dark tbody tr {
+  background-color: #2a2a3c;
+}
+
+.table-dark tbody tr:nth-child(even) {
+  background-color: #2f2f42;
+}
+
+.table-dark td, .table-dark th {
+  border-color: #444;
+  vertical-align: middle;
+}
+
+.table-dark a {
+  color: #0dcaf0;
+}

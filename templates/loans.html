@@ -1,36 +1,49 @@
 {% extends 'base.html' %}
-  {% load static %}
+{% load static %}
 
-  <title>{% block title %}expenses manager | Home {% endblock %}</title>
+  <title>{% block title %} expenses manager {% endblock %}</title>
 
   {% block content %}
   <div>
-      <h1> Loans Manager </h1>
+      <h1 class="loans_manager"> Loans Manager </h1>
 
-    <div class="summary">
-      <div class="card" id="totalLoans">Total Loans: 0</div>
-      <div class="card" id="completedLoans">Completed: 0</div>
-      <div class="card" id="ongoingLoans">Ongoing: 0</div>
+    <div class="loan_summary">
+      <div class="card" id="totalLoans">Total Loans: {{total_Loans}} </div>
+      <div class="card" id="completedLoans">Completed Loans: {{completed_Loans}} </div>
+      <div class="card" id="ongoingLoans">Ongoing Loans: {{ongoing_Loans}} </div>
     </div>
 
-    <h2>Loan Details</h2>
+    <h2 class="loans_details">Loan Details</h2>
     <table id="loanTable">
       <thead>
         <tr>
-          <th>Loan ID</th>
+          <th>Name</th>
           <th>Amount</th>
           <th>Status</th>
           <th>EMI</th>
+          <th>Created</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {% for loan in loans %}
+        <tr>
+          <td> {{ loan.name }} </td>
+          <td> {{ loan.amount }} </td>
+          <td> {{ loan.status }} </td>
+          <td> {{ loan.created }} </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4"> No loans found </td></tr>
+        {% endfor %}
+      </tbody>
     </table>
 
     <h2>EMI Schedule</h2>
     <div id="emiSection">
       <p>Select a loan to view EMI details.</p>
     </div>
-  </div>
+  
+
 
   <script src="{% static 'loans.js' %}"></script>
  {% endblock %} 

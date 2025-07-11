@@ -49,3 +49,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }, index * 100);
     });
 });
+
+<script>
+    document.addEventListener(DOMContentLoaded, function{
+        const typeSelect = document.querySelector('select[name="type"]');
+        const sourceInput = document.querySelector('input[name="source"]').closest('.col-md-4');
+        const paid_to_input = document.querySelector('input[name="paid_to"]').closest('.col-md-4');
+
+        function hide{
+            const type = typeSelect.value;
+            if (type === "income") {
+                sourceInput.style.display = 'block';
+                paid_to_input.style.display = 'None';
+            }
+            else {
+                sourceInput.style.display = 'none';
+                paid_to_input.style.display = 'block';
+            }
+
+            typeSelect.addEventListener('change', hide);
+            hide();
+        }
+    });
+</script>

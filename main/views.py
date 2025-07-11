@@ -101,7 +101,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from . models import Transactions
+from . models import Transactions, Loan
 # from django.db.models import Q
 
 # Create your views here.
@@ -161,6 +161,7 @@ def transactions(request):
         currency = request.POST.get("currency")
         description = request.POST.get("description")
         date = request.POST.get("date")
+        in_voice = request.FILES.get("invoice")
 
         if transaction_type == "income":
             Transactions.objects.create(
@@ -172,7 +173,8 @@ def transactions(request):
             amount = amount,
             currency = currency,
             description = description,
-            date = date
+            date = date,
+            invoice = in_voice
             )
         else:
             Transactions.objects.create(
@@ -184,7 +186,8 @@ def transactions(request):
             amount = amount,
             currency = currency,
             description = description,
-            date = date 
+            date = date,
+            invoice = in_voice 
             )
 
         return redirect('transactions')
@@ -200,4 +203,16 @@ def transactions(request):
 #         transactions = Transactions.objects.all()
         
 def loans(request):
-    return render(request, 'loans.html')
+    all_loans = Loan.objects.all()
+    total_loans = all_loans.count()
+    completed_loans = all_loans.filter(status='completed').count()
+    ongoing_loans = all_loans.filter(status='ongoing').count()
+    
+    context = {
+        'loans' : all_loans,
+        'total_loans' : total_loans,
+        'completed_loans' : completed_loans,
+        'ongoing_loans' : ongoing_loans,
+    }
+    
+    return render(request, 'loans.html', context)

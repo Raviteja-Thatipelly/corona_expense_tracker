@@ -1,180 +1,192 @@
 {% extends 'base.html' %}
-  {% load static %}
+{% load static %}
 
-  <title>{% block title %} expenses manager {% endblock %}</title>
+<title>{% block title %} expenses manager {% endblock %}</title>
 
-  {% block content %}
-        
-        <!-- partial -->  
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="page-headera d-flex justify-content-between align-items-center">
-              <h3 class="page-title"> Transactions </h3>
-              <nav>
-                <ol><button type="button" class="btn-primary btn" data-bs-toggle="offcanvas" data-bs-target="#transactionoffcanvas" >Add Transaction</button></ol>
-              </nav>
-            </div>
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Transaction  Table</h4>
-                    <!-- <p class="card-description"> Add class <code>.table</code> -->
-                    <!-- </p> -->
-                    <div class="table-responsive">
-                      <table id="transactionTable" class="table table-striped table-dark table-borded">
-                        <thead>
-                              <tr>
-                          <th>Type</th>
-                          <th>Source</th>
-                          <th>Paid To</th>
-                          <th>category</th>
-                          <th>Payment Mode</th>
-                          <th>Amount</th>
-                          <th>Currency</th>
-                          <th>Description</th>
-                          <th>Date</th>
-                          <th>Invoice</th>
-                          <th> Actions </th>
-                      </tr>
-                        </thead>
-                        <tbody>
-                          {% for transaction in transactions %}
+{% block content %}
+
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header d-flex justify-content-between align-items-center">
+      <h3 class="page-title"> Transactions </h3>
+      <nav>
+        <ol><button type="button" class="btn-primary btn" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Add Transaction</button>
+        </ol>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Transaction Table</h4>
+            <!-- <p class="card-description"> Add class <code>.table</code> -->
+            <!-- </p> -->
+            <div class="table-responsive">
+              <table id="transactionTable" class="table table-striped table-dark table-bordered js-grid">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Source</th>
+                    <th>Paid To</th>
+                    <th>category</th>
+                    <th>Payment Mode</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Invoice</th>
+                    <th> Actions </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for transaction in transactions %}
                   <tr data-category="{{transaction.category|lower}}">
-                      <td>{{ transaction.type }}</td>
-                      <td>{{ transaction.source }}</td>
-                      <td>{{ transaction.paid_to }}</td>
-                      <td>{{ transaction.category }}</td>
-                      <td>{{ transaction.mode_of_payment }}</td>
-                      <td>{{ transaction.amount }}</td>
-                      <td>{{ transaction.currency }}</td>
-                      <td>{{ transaction.description }}</td>
-                      <td>{{ transaction.date }}</td>
-                      <td>
-                        {% if transaction.invoice %}
-                       <a href="{{ transaction.invoice.url }}" target="_blank">View</a>
-                       {% else %}
-                           No file
-                       {% endif %} 
-                      </td>
-                      <td>
-                        <input class="jsgrid-button jsgrid-edit-button" type="button" title="Edit">
-                      </td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.source }}</td>
+                    <td>{{ transaction.paid_to }}</td>
+                    <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.mode_of_payment }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.currency }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>
+                      {% if transaction.invoice %}
+                      <a href="{{ transaction.invoice.url }}" target="_blank">View</a>
+                      {% else %}
+                      No file
+                      {% endif %}
+                    </td>
+                    <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
+                      <input class="jsgrid-button jsgrid-edit-button" type="button" title="Edit">
+                      <input class="jsgrid-button jsgrid-delete-button" type="button" title="Delete">
+                    </td>
                   </tr>
                   {% empty %}
                   <tr>
-                      <td colspan="8">No transactions found.</td>
+                    <td colspan="8">No transactions found.</td>
                   </tr>
                   {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                </tbody>
+              </table>
             </div>
-            </div>
-            
-<!-- Form for adding a new transaction -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="transactionoffcanvas" aria-labelledby="transactionoffcanvasLabel">
-              <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="transactionoffcanvasLabel"> Add Transactions</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="hide"> </button>
-              </div>
-                
-            <form method="POST" action="{% url 'transactions' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="offcanvas-body">
-            <div class="row">
-            <div class="col-md-6 mb-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Form for adding a new transaction -->
+
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvasWithBothOptions"
+    aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Add Transactions</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+    <form method="POST" action="{% url 'transactions' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <!-- <div class="row"> -->
+          <div class="col-lg-12 mb-3">
             <label class="form-label">Type:</label>
-                <select name="type" class="form-select text-white bg-dark" required>
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
-                </select>
-            
-            </div>
-            
-            <div class="col-md-6 mb-3">
+            <select name="type" class="form-select text-white bg-dark" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label class="form-label">Source:</label>
-                <input type="text" name="source" class="form-control" required>
-            
-            </div>
-            
-            <div class="col-md-6 mb-3">
+            <input type="text" name="source" class="form-control" required>
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label class="form-label">Paid To:</label>
-                <input class="form-control" type="text" name="paid_to">
-            
-            </div>
-            
-            <div class="col-md-6 mb-3">
-             <label class="form-label">Category:</label>
-                <select name="category" class="form-select text-white bg-dark" required>
-                    <option value="food"> Food </option>
-                    <option value="shopping"> Shopping </option>
-                    <option value="bills"> Bills </option>
-                    <option value="travel"> Travel </option>
-                    <option value="others"> Others </option>
-                </select>    
-            
-            </div>
+            <input class="form-control" type="text" name="paid_to">
 
-            <div class="col-md-6 mb-3">
+          </div>
+
+          <div class="col-lg-12 mb-3">
+            <label class="form-label">Category:</label>
+            <select name="category" class="form-select text-white bg-dark" required>
+              <option value="food"> Food </option>
+              <option value="shopping"> Shopping </option>
+              <option value="bills"> Bills </option>
+              <option value="travel"> Travel </option>
+              <option value="others"> Others </option>
+            </select>
+
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label>Payment Mode:</label>
-                <select name="mode_of_payment" class="form-select text-white bg-dark">
-                    <option value="cash">Cash</option>
-                    <option value="card">Card</option>
-                    <option value="bank">Bank Transfer</option>
-                </select>
-            
-            </div>
+            <select name="mode_of_payment" class="form-select text-white bg-dark">
+              <option value="cash">Cash</option>
+              <option value="card">Card</option>
+              <option value="bank">Bank Transfer</option>
+            </select>
 
-            <div class="col-md-6 mb-3">
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label>Amount:</label>
-                <input type="number" name="amount" step="0.01" required>
-            
-            </div>
+            <input type="number" name="amount" step="0.01" required>
 
-            <div class="col-md-6 mb-3">
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label class="form-label"> Currency:</label>
-                <select name="currency" class="form-select text-white bg-dark" required>
-                <option value="USD">USD – US Dollar</option>
-                <option value="INR">INR – Indian Rupee</option>
-                <option value="EUR">EUR – Euro</option>
-                <option value="GBP">GBP – British Pound</option>
-                <option value="JPY">JPY – Japanese Yen</option>
-                </select>
-            
-            </div>
+            <select name="currency" class="form-select text-white bg-dark" required>
+              <option value="USD">USD – US Dollar</option>
+              <option value="INR">INR – Indian Rupee</option>
+              <option value="EUR">EUR – Euro</option>
+              <option value="GBP">GBP – British Pound</option>
+              <option value="JPY">JPY – Japanese Yen</option>
+            </select>
 
-            <div class="col-md-6 mb-3">
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label class="form-label">Description:</label>
-                <textarea name="description" class="form-control"></textarea>
-            
-            </div>
+            <textarea name="description" class="form-control"></textarea>
 
-            <div class="col-md-6 mb-3">
+          </div>
+
+          <div class="col-lg-12 mb-3">
             <label class="form-label">Date:</label>
-                <input type="datetime-local" name="date" class="form-control" >
-            
-            </div>
+            <input type="datetime-local" name="date" class="form-control">
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Upload Invoice:
-                <input type="file" name="invoice" class="form-control">
-              </label>
-            </div>
+          </div>
 
-            <div class="text-center mb-3">
+          <div class="col-lg-12 mb-3">
+            <label class="form-label">Upload Invoice:
+              <input type="file" name="invoice" class="form-control">
+            </label>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-3">
             <button type="submit" class="btn btn-primary">Add Transaction</button>
-            </div>
-            </div>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas"> Cancel </button>
-            </div>
-        </form>
-                </div>
-              <!-- </div>
-            </div> -->
- 
-            {% endblock %} 
 
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas"> Cancel </button>
+          </div>
+          
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

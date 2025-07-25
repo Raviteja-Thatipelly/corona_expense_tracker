@@ -26,13 +26,20 @@ class Transactions(models.Model):
     
 class Loan(models.Model):
     loan_status = [
-        ("Ongoing", "ongoing"),
-        ("Completed", "completed")
+        ("ACTIVE", "active"),
+        ("CLOSED", "closed")
     ]
-    name = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    name = models.CharField(max_length=100, default=None)
+    lender = models.CharField(max_length=100, default=None)
+    loan_type = models.CharField(max_length=100, default=None)
+    start_date = models.DateField(default=None)
+    tenure = models.DecimalField(max_digits=10, decimal_places=False, default=None)
+    intrest_rate = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    loan_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    emi_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    loan_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=10, choices=loan_status)
-    created_at = models.DateField(auto_now_add=True)
+    
             
     def __str__(self):
         return f"{self.name}-{self.status}"

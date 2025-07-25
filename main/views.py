@@ -195,24 +195,23 @@ def transactions(request):
     trans_actions_data = Transactions.objects.all().order_by('-date')
     return render(request, 'transactions.html', {'transactions': trans_actions_data})
 
-# def filter_transactions():
-#     filter_category = request.GET.get('category')
-#     if filter_category:
-#         transactions = Transactions.objects.filter(category = filter_category)
-#     else:
-#         transactions = Transactions.objects.all()
         
 def loans(request):
-    all_loans = Loan.objects.all()
-    total_loans = all_loans.count()
-    completed_loans = all_loans.filter(status='completed').count()
-    ongoing_loans = all_loans.filter(status='ongoing').count()
-    
-    context = {
-        'loans' : all_loans,
-        'total_loans' : total_loans,
-        'completed_loans' : completed_loans,
-        'ongoing_loans' : ongoing_loans,
-    }
-    
-    return render(request, 'loans.html', context)
+    if request.method == "POSt":
+        Loan.objects.create(
+            name = request.POST.get("name"),
+            lender = request.POST.get("lender"),
+            loan_type = request.POST.get("loan_type"),
+            start_date = request.POST.get("start_date"),
+            tenure = request.POST.get("tenure"),
+            intrest_rate = request.POST.get("intrestrate"),
+            loan_amount = request.POST.get("loan_amount"),
+            emi_amount = request.POST.get("emi_amount"),
+            loan_balance = request.POST.get("loan_balance"),
+            status = request.POST.get("status")
+        )
+        
+        return redirect('loans')
+        
+    loans_data = Loan.objects.all().order_by('-emi_amount')
+    return render(request, 'loans.html', {'loans':loans_data})

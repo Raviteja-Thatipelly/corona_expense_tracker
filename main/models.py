@@ -4,18 +4,15 @@ from django.contrib.auth.models import User
 
 class Transactions(models.Model):
     transactions_type = [
-        ("income", "INCOME"),
-        ("expenses", "EXPENSES")
+        ("debit", "DEBIT"),
+        ("credit", "CREDIT")
     ]
     
-    type = models.CharField(max_length=10, choices=transactions_type, default='Income')
-    source = models.CharField(max_length=100, null=True, blank=True)
-    paid_to = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
     category = models.CharField(max_length=50, null=True, blank=True)
-    mode_of_payment = models.CharField(max_length=20, default='cash')
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    currency = models.CharField(max_length=10, default='INR')
-    description = models.TextField(blank=True, null=True)
+    type = models.CharField(max_length=10, choices=transactions_type, default='credit')
+    mode_of_payment = models.CharField(max_length=20, default='cash')
     date = models.DateTimeField()
     invoice = models.FileField(upload_to='invoices/', blank=True, null=True)
 

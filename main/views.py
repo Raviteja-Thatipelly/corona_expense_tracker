@@ -152,43 +152,41 @@ def user_logout(request):
 def transactions(request):
     if request.method == "POST":
         # print("POST DATA:", request.POST)
-        transaction_type = request.POST.get("type")
-        source_input = request.POST.get("source")
-        paid_to_input = request.POST.get("paid_to")
-        category_input = request.POST.get("category")
-        payment_mode = request.POST.get("mode_of_payment")
-        amount = request.POST.get("amount")
-        currency = request.POST.get("currency")
-        description = request.POST.get("description")
-        date = request.POST.get("date")
-        in_voice = request.FILES.get("invoice")
-
-        if transaction_type == "income":
-            Transactions.objects.create(
-            type = transaction_type,
-            source = source_input,
-            paid_to = None,
-            category = category_input,
-            mode_of_payment = payment_mode,
-            amount = amount,
-            currency = currency,
-            description = description,
-            date = date,
-            invoice = in_voice
-            )
-        else:
-            Transactions.objects.create(
-            type = transaction_type,
-            source = None,
-            paid_to = paid_to_input,
-            category = category_input,
-            mode_of_payment = payment_mode,
-            amount = amount,
-            currency = currency,
-            description = description,
-            date = date,
-            invoice = in_voice 
-            )
+        Transactions.objects.create(
+        name = request.POST.get("name"),
+        category = request.POST.get("category"),
+        amount = request.POST.get("amount"),
+        type = request.POST.get("type"),
+        mode_of_payment = request.POST.get("mode_of_payment"),
+        date = request.POST.get("date"),
+        voice = request.FILES.get("invoice")
+        )
+        # if transaction_type == "income":
+        #     Transactions.objects.create(
+        #     type = transaction_type,
+        #     source = source_input,
+        #     paid_to = None,
+        #     category = category_input,
+        #     mode_of_payment = payment_mode,
+        #     amount = amount,
+        #     currency = currency,
+        #     description = description,
+        #     date = date,
+        #     invoice = in_voice
+        #     )
+        # else:
+        #     Transactions.objects.create(
+        #     type = transaction_type,
+        #     source = None,
+        #     paid_to = paid_to_input,
+        #     category = category_input,
+        #     mode_of_payment = payment_mode,
+        #     amount = amount,
+        #     currency = currency,
+        #     description = description,
+        #     date = date,
+        #     invoice = in_voice 
+        #     )
 
         return redirect('transactions')
     
